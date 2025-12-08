@@ -4,6 +4,7 @@ import { useConnectorClient, useAccount, useSwitchChain } from "wagmi";
 import { createAdapterFromProvider } from "@circle-fin/adapter-viem-v2";
 import { BridgeKit } from "@circle-fin/bridge-kit";
 import "./App.css";
+import Logo from "./Logo";
 
 type SupportedChainItem = { chain: string; name: string; type: string; chainId?: number };
 
@@ -290,7 +291,7 @@ export default function App() {
       <div className="main-column">
         {/* Header */}
         <header className="app-header">
-          <a href="https://www.arc.network/" target="_blank" rel="noopener noreferrer" className="brand-logo">ARC BRIDGE</a>
+          <a href="https://www.arc.network/" target="_blank" rel="noopener noreferrer" className="brand-logo"><Logo height={20} width={20} /><span className="brand-text">ARC BRIDGE</span></a>
           <div className="header-actions">
             <ConnectButton showBalance={false} accountStatus="avatar" chainStatus="icon" />
           </div>
