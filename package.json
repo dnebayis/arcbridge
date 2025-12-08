@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "vite build",
     "build:web": "vite build",
     "estimate": "ts-node --esm -r dotenv/config src/bridge.ts --estimate",
     "bridge": "ts-node --esm -r dotenv/config src/bridge.ts --execute",
