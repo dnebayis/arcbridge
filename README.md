@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arc Bridge
+
+A cross-chain USDC bridge between **Arc Testnet** and **Ethereum Sepolia** using [Circle CCTP V2](https://developers.circle.com/stablecoins/cctp-getting-started). Native USDC transfers — no wrapped tokens.
+
+**Live demo:** [arc-bridge.vercel.app](https://arc-bridge.vercel.app)
+
+---
+
+## Features
+
+- Bridge USDC between Arc Testnet and Ethereum Sepolia
+- Circle CCTP V2 fast mode (sub-minute finality)
+- Transaction history with live status tracking
+- Shareable bridge receipt as downloadable PNG
+- Share on X with one click
+- Responsive UI with wallet connect (RainbowKit + wagmi)
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Edge Runtime)
+- [wagmi](https://wagmi.sh) + [RainbowKit](https://rainbowkit.com) — wallet connection
+- [Circle CCTP V2](https://developers.circle.com) — cross-chain USDC
+- [next/og](https://nextjs.org/docs/app/api-reference/functions/image-response) — receipt image generation
+- Tailwind CSS v4 + shadcn/ui
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone and install
+
+```bash
+git clone https://github.com/your-username/arc-bridge.git
+cd arc-bridge
+npm install
+```
+
+### 2. Set up environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in the values in `.env.local`:
+
+| Variable | Description | Where to get it |
+|---|---|---|
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect Project ID | [cloud.walletconnect.com](https://cloud.walletconnect.com) |
+| `NEXT_PUBLIC_ETHERSCAN_API_KEY` | Etherscan API key (for tx history) | [etherscan.io/myapikey](https://etherscan.io/myapikey) |
+
+### 3. Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/arc-bridge)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Connect your GitHub repo on [vercel.com](https://vercel.com)
+2. Add the environment variables in Vercel project settings:
+   - `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`
+   - `NEXT_PUBLIC_ETHERSCAN_API_KEY`
+3. Deploy — `VERCEL_URL` is set automatically by Vercel
+
+## Testnet Resources
+
+- [USDC Faucet](https://faucet.circle.com) — get testnet USDC
+- [Arc Explorer](https://testnet.arcscan.app) — Arc Testnet block explorer
+- [Sepolia Etherscan](https://sepolia.etherscan.io) — Sepolia block explorer
+
+## Built by
+
+[siyabald.vercel.app](https://siyabald.vercel.app) · [@siyabaldacc](https://x.com/siyabaldacc)

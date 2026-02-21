@@ -1,65 +1,144 @@
-import Image from "next/image";
+"use client";
+
+import { useRef } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BridgeWidget } from "@/components/bridge/BridgeWidget";
+import { TransactionHistory } from "@/components/bridge/TransactionHistory";
+import { ArrowLeftRight, History, ExternalLink } from "lucide-react";
 
 export default function Home() {
+  const historyRefreshRef = useRef<(() => void) | null>(null);
+
+  const handleTabChange = (value: string) => {
+    if (value === "history" && historyRefreshRef.current) {
+      historyRefreshRef.current();
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start pt-12 pb-16 px-4">
+      {/* Background — Arc brand gradient orbs */}
+      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+        <div
+          className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(107,92,231,0.12) 0%, transparent 70%)" }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <div
+          className="absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(59,111,212,0.08) 0%, transparent 70%)" }}
+        />
+        <div
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(107,92,231,0.05) 0%, transparent 70%)" }}
+        />
+      </div>
+
+      <div className="w-full max-w-[440px] space-y-5">
+        {/* Hero text */}
+        <div className="text-center space-y-1.5 pb-2">
+          <h1
+            className="text-2xl font-semibold"
+            style={{ color: "#F0F2F8", letterSpacing: "-0.02em" }}
+          >
+            Bridge USDC
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-sm" style={{ color: "#6B7A99" }}>
+            Native transfers via Circle CCTP V2 — no wrapped tokens
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+
+        {/* Main card */}
+        <div
+          className="rounded-2xl overflow-hidden"
+          style={{
+            background: "rgba(255,255,255,0.025)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(107,92,231,0.04)",
+          }}
+        >
+          <Tabs defaultValue="bridge" onValueChange={handleTabChange} className="w-full">
+            <TabsList
+              className="w-full rounded-none border-b bg-transparent p-0 gap-0 h-auto"
+              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+            >
+              <TabsTrigger
+                value="bridge"
+                className="flex-1 flex items-center justify-center gap-2 rounded-none h-12 text-sm font-medium border-b-2 border-transparent data-[state=active]:border-[#6B5CE7] data-[state=active]:text-white text-[#6B7A99] transition-all bg-transparent"
+              >
+                <ArrowLeftRight className="w-3.5 h-3.5" />
+                Bridge
+              </TabsTrigger>
+              <TabsTrigger
+                value="history"
+                className="flex-1 flex items-center justify-center gap-2 rounded-none h-12 text-sm font-medium border-b-2 border-transparent data-[state=active]:border-[#6B5CE7] data-[state=active]:text-white text-[#6B7A99] transition-all bg-transparent"
+              >
+                <History className="w-3.5 h-3.5" />
+                History
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="bridge" className="p-6 mt-0">
+              <BridgeWidget />
+            </TabsContent>
+
+            <TabsContent value="history" className="p-6 mt-0">
+              <TransactionHistory onRefreshRef={historyRefreshRef} />
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Footer links */}
+        <div className="flex items-center justify-center gap-5 text-xs" style={{ color: "#3D4A66" }}>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://faucet.circle.com"
             target="_blank"
             rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-[#6B7A99] transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            USDC Faucet <ExternalLink className="w-3 h-3" />
           </a>
+          <span style={{ color: "#1E2A42" }}>·</span>
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://testnet.arcscan.app"
             target="_blank"
             rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-[#6B7A99] transition-colors"
           >
-            Documentation
+            Arc Explorer <ExternalLink className="w-3 h-3" />
+          </a>
+          <span style={{ color: "#1E2A42" }}>·</span>
+          <a
+            href="https://sepolia.etherscan.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-[#6B7A99] transition-colors"
+          >
+            Etherscan <ExternalLink className="w-3 h-3" />
           </a>
         </div>
-      </main>
-    </div>
+        <div className="flex items-center justify-center gap-2 mt-3 text-xs" style={{ color: "#1E2A42" }}>
+          Built by{" "}
+          <a
+            href="https://siyabald.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#6B7A99] transition-colors"
+            style={{ color: "#2A3A58" }}
+          >
+            siyabald.vercel.app
+          </a>
+          <span>·</span>
+          <a
+            href="https://x.com/siyabaldacc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#6B7A99] transition-colors"
+            style={{ color: "#2A3A58" }}
+          >
+            @siyabaldacc
+          </a>
+        </div>
+      </div>
+    </main>
   );
 }
