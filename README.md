@@ -2,7 +2,7 @@
 
 A cross-chain USDC bridge between **Arc Testnet** and **Ethereum Sepolia** using [Circle CCTP V2](https://developers.circle.com/stablecoins/cctp-getting-started). Native USDC transfers — no wrapped tokens.
 
-**Live demo:** [arc-bridge.vercel.app](https://arcbridge-liard.vercel.app/)
+**Live demo:** [arcbridge-liard.vercel.app](https://arcbridge-liard.vercel.app/)
 
 ---
 
